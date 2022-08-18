@@ -10,6 +10,8 @@ const MainPageIndex = () => {
 
   console.log(accounts.data);
 
+  const dataSource = accounts.data ?? [];
+
   const columns = [
     { title: "번호", dataIndex: "idNum", width: 80, align: "center" },
     { title: "버킷", dataIndex: "bucketTitle", width: 250, align: "center" },
@@ -66,7 +68,7 @@ const MainPageIndex = () => {
       </MainHeader>
       <MainContent>
         <div>
-          <Table columns={columns} dataSource={accounts.data} />
+          <Table columns={columns} dataSource={dataSource} pagination={false} />
         </div>
       </MainContent>
     </MainWrapper>
