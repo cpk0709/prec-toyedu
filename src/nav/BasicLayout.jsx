@@ -50,7 +50,10 @@ const BasicLayout = ({ children }) => {
           {menu.map((data) => {
             const isSelect = selected === data.key;
             const onClick = () => {
-              setSelected(data.key);
+              // setSelected(data.key);
+              setSelected((prev) =>
+                prev ? prev === data.key && null : data.key
+              );
             };
             return (
               <MenuItem key={data.key} onClick={onClick}>
@@ -83,8 +86,9 @@ const BasicLayout = ({ children }) => {
           })}
         </MenuContainer>
       </SideContainer>
-
-      {children}
+      <RootContainer>
+        <Container>{children}</Container>
+      </RootContainer>
     </Wrapper>
   );
 };
@@ -183,6 +187,20 @@ const MenuSubListItem = styled.li`
       color: black;
     }
   }
+`;
+
+const RootContainer = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: auto;
+`;
+
+const Container = styled.div`
+  margin-bottom: 30px;
+  margin-top: 40px;
+  margin-left: 40px;
+  margin-right: 120px;
 `;
 
 export default BasicLayout;
