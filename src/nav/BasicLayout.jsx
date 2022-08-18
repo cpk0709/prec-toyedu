@@ -1,43 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const menu = [
   {
     key: "account",
     title: "계정관리",
     items: [
-      { item: "메뉴1", link: "/" },
-      { item: "메뉴2", link: "/" },
-      { item: "메뉴3", link: "/" },
+      { item: "내계정 조회", link: "/account/show" },
+      { item: "내계정 수정", link: "/account/update" },
+      { item: "내계정 삭제", link: "/account/delete" },
     ],
   },
   {
     key: "bucket",
     title: "버킷관리",
     items: [
-      { item: "메뉴1", link: "/" },
-      { item: "메뉴2", link: "/" },
-      { item: "메뉴3", link: "/" },
-      { item: "메뉴4", link: "/" },
+      { item: "내버킷 조회", link: "/bucket/show" },
+      { item: "내버킷 수정", link: "/bucket/update" },
+      { item: "내버킷 삭제", link: "/bucket/delete" },
+      { item: "내버킷 통계", link: "/bucket/chart" },
     ],
   },
-  { key: "sample1", title: "샘플메뉴1", link: "/" },
-  { key: "sample2", title: "샘플메뉴2", link: "/" },
+  { key: "sample1", title: "샘플메뉴1", link: "/sample1" },
+  { key: "sample2", title: "샘플메뉴2", link: "/sample2" },
   {
     key: "sample3",
     title: "샘플메뉴3",
     items: [
-      { item: "서브메뉴1", link: "/" },
-      { item: "서브메뉴2", link: "/" },
-      { item: "서브메뉴3", link: "/" },
-      { item: "서브메뉴4", link: "/" },
+      { item: "서브메뉴1", link: "/sample/sub1" },
+      { item: "서브메뉴2", link: "/sample/sub2" },
+      { item: "서브메뉴3", link: "/sample/sub3" },
+      { item: "서브메뉴4", link: "/sample/sub4" },
     ],
   },
 ];
 
 const BasicLayout = ({ children }) => {
   const [selected, setSelected] = useState();
+  const { asPath } = useRouter();
+
+  // useEffect(() => {
+  //   const targetRoute = asPath.split("/")[1];
+  //   const selectMenu = menu.find(({ key }) => targetRoute === key);
+  //   if (selectMenu) setSelected(selectMenu.key);
+  // }, [asPath]);
+
   return (
     <Wrapper>
       <SideContainer>
