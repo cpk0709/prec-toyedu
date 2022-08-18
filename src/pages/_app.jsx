@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import BasicLayout from "../nav/BasicLayout";
+import GlobalStyle from "../styles/GlobalStyle";
 
 //로그인 했을 때와 안 했을 때 다른 화면이 보이는 것을 가정
 const MainContainer = (props) => {
@@ -22,7 +23,12 @@ const MainContainer = (props) => {
 };
 
 const MyApp = (props) => {
-  return <MainContainer {...props} />;
+  return (
+    <>
+      <GlobalStyle />
+      <MainContainer {...props} />
+    </>
+  );
 };
 
 export default MyApp;
