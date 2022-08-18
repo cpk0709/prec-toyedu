@@ -25,7 +25,11 @@ const MainPageIndex = () => {
           </SearchButton>
         </MainSort>
       </MainHeader>
-      <p>Main Page</p>
+      <MainContent>
+        <div>
+          <Table />
+        </div>
+      </MainContent>
     </MainWrapper>
   );
 };
@@ -98,5 +102,13 @@ const SearchText = styled.div`
   text-align: center;
   color: #fff;
 `;
+
+const MainContent = styled.div`
+  background-color: #fff;
+  margin-top: 17px;
+  position: relative;
+`;
+
+const TableColumn = styled.div``;
 
 export default MainPageIndex;
