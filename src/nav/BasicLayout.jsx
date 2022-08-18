@@ -52,7 +52,7 @@ const BasicLayout = ({ children }) => {
             const onClick = () => {
               // setSelected(data.key);
               setSelected((prev) =>
-                prev ? prev === data.key && null : data.key
+                prev ? (prev === data.key ? null : data.key) : data.key
               );
             };
             return (
