@@ -1,15 +1,46 @@
-import React from "react";
+import { useEffect } from "react";
+import useAxios from "../../hooks/useAxios";
+import { restApi } from "../../api";
 import { Table, Button, Typography, DatePicker } from "antd";
 import styled from "styled-components";
+import Link from "next/link";
 
 const MainPageIndex = () => {
+  const accounts = useAxios();
+
+  console.log(accounts.data);
+
   const columns = [
-    { title: "번호", width: 80, align: "center" },
-    { title: "버킷", width: 250, align: "center" },
-    { title: "작성일자", width: 120, align: "center" },
-    { title: "상태", width: 80, align: "center" },
-    { title: "상세", width: 80, align: "center" },
+    { title: "번호", dataIndex: "idNum", width: 80, align: "center" },
+    { title: "버킷", dataIndex: "bucketTitle", width: 250, align: "center" },
+    { title: "작성일자", dataIndex: "createdAt", width: 120, align: "center" },
+    {
+      title: "상태",
+      dataIndex: "status",
+      width: 80,
+      align: "center",
+      render: (value) => (value ? <div>완료</div> : <div>진행중</div>),
+    },
+    {
+      title: "상세",
+      dataIndex: "idNum",
+      width: 80,
+      align: "center",
+      render: (value) => (
+        <Link href={"/"}>
+          <a>상세</a>
+        </Link>
+      ),
+    },
   ];
+
+  useEffect(() => {
+    const endpoint = "/list";
+    accounts.loadData(restApi.get(endpoint)).catch((error) => {
+      console.log(error);
+      console.warn(error);
+    });
+  }, []);
 
   return (
     <MainWrapper>
@@ -35,7 +66,7 @@ const MainPageIndex = () => {
       </MainHeader>
       <MainContent>
         <div>
-          <Table columns={columns} />
+          <Table columns={columns} dataSource={accounts.data} />
         </div>
       </MainContent>
     </MainWrapper>
