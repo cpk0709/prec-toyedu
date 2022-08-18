@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
 import Link from "next/link";
 
 const menu = [
@@ -37,9 +37,40 @@ const menu = [
 ];
 
 const BasicLayout = ({ children }) => {
+  const [selected, setSelected] = useState();
   return (
     <Wrapper>
-      <p>Basic Layout</p>
+      <SideContainer>
+        <LogoContainer>
+          <Link href="/">
+            <a>My Bucket</a>
+          </Link>
+        </LogoContainer>
+        <MenuContainer>
+          {menu.map((data) => {
+            const isSelect = selected === data.key;
+            const onClick = () => {
+              setSelected(data.key);
+            };
+            return (
+              <MenuItem key={data.key} onClick={onClick}>
+                {data.link ? (
+                  <Link href={`${data.link}`}>
+                    <MenuItemTitle isSelect={isSelect}>
+                      {data.title}
+                    </MenuItemTitle>
+                  </Link>
+                ) : (
+                  <MenuItemTitle isSelect={isSelect} isShowArray>
+                    {data.title}
+                  </MenuItemTitle>
+                )}
+              </MenuItem>
+            );
+          })}
+        </MenuContainer>
+      </SideContainer>
+
       {children}
     </Wrapper>
   );
@@ -50,6 +81,62 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   height: 100%;
+`;
+
+const SideContainer = styled.aside`
+  background: #fff;
+  width: 350px;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+`;
+
+const LogoContainer = styled.div`
+  background: #aed8ff;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: #fff;
+  font-weight: 700;
+`;
+
+const MenuContainer = styled.nav`
+  border-right: 1px #ddd solid;
+  flex: 1;
+`;
+
+const MenuItem = styled.div`
+  border-bottom: 1px #eee solid;
+  overflow: hidden;
+`;
+
+const MenuItemTitle = styled.a`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  height: 70px;
+  padding: 0 20px;
+  color: #707070;
+  font-size: 20px;
+  font-weight: 500;
+  // transition-duration: 0.3s;
+  ${({ isSelect }) =>
+    isSelect && `font-weight:600; color: #fff; background-color:#c4e2ff;`}
+  ${({ isShowArray = false }) =>
+    isShowArray &&
+    css`
+      &::after {
+        content: "";
+        width: 15px;
+        height: 15px;
+        background-image: url("/icons/nav_arr_off.png");
+        background-size: contain;
+      }
+    `}
 `;
 
 export default BasicLayout;
