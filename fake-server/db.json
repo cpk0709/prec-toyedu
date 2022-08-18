@@ -1,0 +1,22 @@
+{
+  "list": [
+    {
+      "idNum": 1,
+      "bucketTitle": "자바스크립트 마스터",
+      "createdAt": "2022-08-15",
+      "status": false
+    },
+    {
+      "idNum": 2,
+      "bucketTitle": "해외여행 가기",
+      "createdAt": "2022-08-16",
+      "status": false
+    },
+    {
+      "idNum": 3,
+      "bucketTitle": "영어회화 공부하기",
+      "createdAt": "2022-08-17",
+      "status": false
+    }
+  ]
+}
