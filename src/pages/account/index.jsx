@@ -68,7 +68,12 @@ const MainPageIndex = () => {
       </MainHeader>
       <MainContent>
         <div>
-          <Table columns={columns} dataSource={dataSource} pagination={false} />
+          <Table
+            columns={columns}
+            dataSource={dataSource}
+            pagination={false}
+            rowKey={"idNum"}
+          />
         </div>
       </MainContent>
     </MainWrapper>
