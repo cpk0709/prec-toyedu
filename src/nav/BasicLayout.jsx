@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import Link from "next/link";
 
 const menu = [
@@ -37,10 +38,18 @@ const menu = [
 
 const BasicLayout = ({ children }) => {
   return (
-    <div>
+    <Wrapper>
       <p>Basic Layout</p>
-    </div>
+      {children}
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  background: rgba(244, 246, 250, 0.2);
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+`;
 
 export default BasicLayout;
