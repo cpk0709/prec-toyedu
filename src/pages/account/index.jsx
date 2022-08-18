@@ -3,6 +3,14 @@ import { Table, Button, Typography, DatePicker } from "antd";
 import styled from "styled-components";
 
 const MainPageIndex = () => {
+  const columns = [
+    { title: "번호", width: 80, align: "center" },
+    { title: "버킷", width: 250, align: "center" },
+    { title: "작성일자", width: 120, align: "center" },
+    { title: "상태", width: 80, align: "center" },
+    { title: "상세", width: 80, align: "center" },
+  ];
+
   return (
     <MainWrapper>
       <MainHeader>
@@ -27,7 +35,7 @@ const MainPageIndex = () => {
       </MainHeader>
       <MainContent>
         <div>
-          <Table />
+          <Table columns={columns} />
         </div>
       </MainContent>
     </MainWrapper>
