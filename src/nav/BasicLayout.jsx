@@ -135,8 +135,16 @@ const MenuItemTitle = styled.a`
         height: 15px;
         background-image: url("/icons/nav_arr_off.png");
         background-size: contain;
+        transition-duration: 0.5s;
+        ${({ isSelect }) =>
+          isSelect &&
+          `
+          background-image: url("/icons/nav_arr_on.png"); 
+          transform: rotate(180deg); 
+          transition-duration:0.5s;
+          `};
       }
-    `}
+    `};
 `;
 
 export default BasicLayout;
