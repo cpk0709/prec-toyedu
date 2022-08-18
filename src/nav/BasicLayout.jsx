@@ -65,6 +65,19 @@ const BasicLayout = ({ children }) => {
                     {data.title}
                   </MenuItemTitle>
                 )}
+                {
+                  <MenuSubList isSelect={isSelect}>
+                    {data.items?.map((items, idx) => {
+                      return (
+                        <Link href={`${items.link}`} key={idx}>
+                          <MenuSubListItem>
+                            <a>{items.item}</a>
+                          </MenuSubListItem>
+                        </Link>
+                      );
+                    })}
+                  </MenuSubList>
+                }
               </MenuItem>
             );
           })}
@@ -145,6 +158,31 @@ const MenuItemTitle = styled.a`
           `};
       }
     `};
+`;
+
+const MenuSubList = styled.ul`
+  height: 0;
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+  transition-duration: 0.2s;
+  ${({ isSelect }) => isSelect && `height: auto;`}
+`;
+
+const MenuSubListItem = styled.li`
+  a {
+    display: block;
+    font-size: 20px;
+    line-height: 60px;
+    height: 60px;
+    padding: 0 20px;
+    color: #ddd;
+    font-weight: 300;
+    font-family: "Noto Sans KR", sans-serif;
+    :hover {
+      color: black;
+    }
+  }
 `;
 
 export default BasicLayout;
