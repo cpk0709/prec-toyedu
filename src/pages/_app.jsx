@@ -1,3 +1,4 @@
+import Head from "next/head";
 import "../styles/globals.css";
 import BasicLayout from "../nav/BasicLayout";
 import GlobalStyle from "../styles/GlobalStyle";
@@ -25,6 +26,15 @@ const MainContainer = (props) => {
 const MyApp = (props) => {
   return (
     <>
+      <Head>
+        <meta
+          name="viewport"
+          content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width,height=device-height"
+        />
+        <meta charSet="utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <title>MY_BUCKET</title>
+      </Head>
       <GlobalStyle />
       <MainContainer {...props} />
     </>
