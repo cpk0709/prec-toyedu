@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Header from "../components/Header";
 
 const menu = [
   {
@@ -99,6 +100,7 @@ const BasicLayout = ({ children }) => {
         </MenuContainer>
       </SideContainer>
       <RootContainer>
+        <Header />
         <Container>{children}</Container>
       </RootContainer>
     </Wrapper>
