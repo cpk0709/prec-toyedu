@@ -1,5 +1,13 @@
 import styled from "styled-components";
-import { Dropdown, Space, Menu, Modal, Descriptions } from "antd";
+import {
+  Dropdown,
+  Space,
+  Menu,
+  Modal,
+  Descriptions,
+  Input,
+  Button,
+} from "antd";
 // import Modal from "./modal/Modal";
 import { useState } from "react";
 
@@ -24,6 +32,20 @@ const Header = () => {
       ]}
     />
   );
+
+  const [passwordChange, setPasswordChange] = useState({
+    current: undefined,
+    // password: undefined,
+    // passwordCheck: undefined,
+  });
+
+  const [fillForm, setFillForm] = useState(false);
+
+  const checkForm = () => {
+    setFillForm(true);
+  };
+
+  const passwordRecord = Object.values(passwordChange).every((value) => value);
 
   return (
     <HeadWrapper>
@@ -52,9 +74,73 @@ const Header = () => {
                 labelStyle={{ width: "190px", fontWeight: "bold" }}
                 contentStyle={{ width: "530px" }}
               >
-                test
+                {fillForm && !passwordChange?.current ? (
+                  <ReInputRow>
+                    <Input
+                      onChange={(e) => {
+                        setPasswordChange((prev) => ({
+                          ...prev,
+                          current: e.target.value,
+                        }));
+                      }}
+                      bordered={false}
+                      autoFocus
+                    />
+                    {!passwordChange?.current && (
+                      <p
+                        style={{
+                          textAlign: "right",
+                          width: "400px",
+                          color: "#c40000",
+                        }}
+                      >
+                        비밀번호가 일치하지 않습니다.
+                      </p>
+                    )}
+                  </ReInputRow>
+                ) : (
+                  <Input
+                    onChange={(e) => {
+                      setPasswordChange((prev) => ({
+                        ...prev,
+                        current: e.target.value,
+                      }));
+                    }}
+                    placeholder="현재 비밀번호를 입력해주세요"
+                    bordered={false}
+                    autoFocus
+                  />
+                )}
               </Descriptions.item>
             </Descriptions>
+            {passwordRecord ? (
+              <>
+                <Button
+                  style={{
+                    color: "#ffffff",
+                    width: "160px",
+                    height: "40px",
+                    backgroundColor: "#03c75a",
+                  }}
+                >
+                  변경하기
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  style={{
+                    color: "#ffffff",
+                    width: "160px",
+                    height: "40px",
+                    backgroundColor: "#999899",
+                  }}
+                  onClick={checkForm}
+                >
+                  변경하기
+                </Button>
+              </>
+            )}
           </Modal>
         )}
       </HeadDiv>
@@ -125,6 +211,13 @@ const ModalTitle = styled.p`
   justify-content: left;
   align-items: center;
   margin-bottom: 10px;
+`;
+
+// 좀 생각해봐야겠음
+const ReInputRow = styled.span`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 export default Header;
