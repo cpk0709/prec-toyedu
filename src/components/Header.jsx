@@ -7,8 +7,9 @@ import {
   Descriptions,
   Input,
   Button,
+  Row,
 } from "antd";
-// import Modal from "./modal/Modal";
+import ConfirmModal from "./modal/Modal";
 import { useState } from "react";
 
 const Header = () => {
@@ -44,6 +45,9 @@ const Header = () => {
   const checkForm = () => {
     setFillForm(true);
   };
+
+  //변경 성공 후 나타나는 모달 토글용 state
+  const [confirmModal, setConfirmModal] = useState(false);
 
   const passwordRecord = Object.values(passwordChange).every((value) => value);
 
@@ -113,35 +117,88 @@ const Header = () => {
                 )}
               </Descriptions.item>
             </Descriptions>
-            {passwordRecord ? (
-              <>
-                <Button
-                  style={{
-                    color: "#ffffff",
-                    width: "160px",
-                    height: "40px",
-                    backgroundColor: "#03c75a",
-                  }}
-                >
-                  변경하기
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  style={{
-                    color: "#ffffff",
-                    width: "160px",
-                    height: "40px",
-                    backgroundColor: "#999899",
-                  }}
-                  onClick={checkForm}
-                >
-                  변경하기
-                </Button>
-              </>
-            )}
+            <Row justify="end" align="middle" style={{ height: "70px" }}>
+              <Button
+                style={{
+                  color: "#000000",
+                  width: "160px",
+                  height: "40px",
+                  backgroundColor: "#ffffff",
+                  marginRight: "10px",
+                }}
+                onClick={() => {
+                  setIsModal(false);
+                  setPasswordChange({ current: undefined });
+                  setFillForm(false);
+                }}
+              >
+                취소
+              </Button>
+              {passwordRecord ? (
+                <>
+                  <Button
+                    style={{
+                      color: "#ffffff",
+                      width: "160px",
+                      height: "40px",
+                      backgroundColor: "#03c75a",
+                    }}
+                    onClick={() => {
+                      setIsModal(false);
+                      setConfirmModal(true);
+                    }}
+                  >
+                    변경하기
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    style={{
+                      color: "#ffffff",
+                      width: "160px",
+                      height: "40px",
+                      backgroundColor: "#999899",
+                    }}
+                    onClick={checkForm}
+                  >
+                    변경하기
+                  </Button>
+                </>
+              )}
+            </Row>
           </Modal>
+        )}
+        {confirmModal && (
+          <ConfirmModal
+            visible={confirmModal} // 왜 쓴건지 연구
+            customCloseable // 왜 쓴건지 연구
+            width="400px"
+            height="228px"
+          >
+            <Space direction="vertical" size={45} style={{ width: "100%" }}>
+              <Row justify="center">
+                <Space size="small">
+                  {/* <img src="/image/faq.svg" alt="icon" /> */}
+                  <FaqText>비밀번호가 변경되었습니다.</FaqText>
+                </Space>
+              </Row>
+              <Row justify="center">
+                <Button
+                  style={{
+                    backgroundColor: "#03c75a",
+                    borderRadius: "4px",
+                    color: "#ffffff",
+                    width: "60px",
+                    height: "32px",
+                  }}
+                  onClick={() => setConfirmModal(false)}
+                >
+                  확인
+                </Button>
+              </Row>
+            </Space>
+          </ConfirmModal>
         )}
       </HeadDiv>
       <LogOut>Logout</LogOut>
@@ -213,11 +270,17 @@ const ModalTitle = styled.p`
   margin-bottom: 10px;
 `;
 
-// 좀 생각해봐야겠음
+// validate 체크하면서 잘못된 입력의 경우 p태그의 경고문구가 나오는데 block속성이라 두 줄이 되어서 이를 감싸주고 flex할 필요있음
 const ReInputRow = styled.span`
   display: flex;
   justify-content: space-around;
   align-items: center;
+`;
+
+const FaqText = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.75);
 `;
 
 export default Header;
