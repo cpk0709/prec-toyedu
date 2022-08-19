@@ -14,12 +14,37 @@ const Modal = ({
   radius,
   mr,
 }) => {
+  const onCustomClick = (e) => {
+    if (typeof onClose !== "function") return;
+    if (e.target === e.currentTarget) {
+      onClose(e);
+    }
+  };
+
+  const close = (e) => {
+    if (onClose) {
+      onClose(e);
+    }
+  };
+  //tabIndex 를 -1 로 해주는 이유는 페이지 내에서 키보드로 포커스 시킬순서에서 제외하기 위함
   return (
     <>
-      <ModalWrapper>
-        <ModalInner>
-          <ModalHeader>
-            <ModalTitle>{label}</ModalTitle>
+      <ModalWrapper
+        onClick={customCloseable ? onCustomClick : null}
+        className={className}
+        tabIndex="-1"
+        visible={visible}
+      >
+        <ModalInner
+          tabIndex="0"
+          className="modal-inner"
+          width={width}
+          height={height}
+          radius={radius}
+        >
+          <ModalHeader mr={mr}>
+            <ModalTitle fsize={fsize}>{label}</ModalTitle>
+            {closeable && <ExitImg src="/image/exit.svg" onClick={close} />}
           </ModalHeader>
           {children}
         </ModalInner>
