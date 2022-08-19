@@ -41,11 +41,12 @@ const BasicLayout = ({ children }) => {
   const [selected, setSelected] = useState();
   const { asPath } = useRouter();
 
-  // useEffect(() => {
-  //   const targetRoute = asPath.split("/")[1];
-  //   const selectMenu = menu.find(({ key }) => targetRoute === key);
-  //   if (selectMenu) setSelected(selectMenu.key);
-  // }, [asPath]);
+  useEffect(() => {
+    const targetRoute = asPath.split("/")[1];
+    console.log(targetRoute);
+    const selectMenu = menu.find(({ key }) => targetRoute === key);
+    if (selectMenu) setSelected(selectMenu.key);
+  }, [asPath]);
 
   return (
     <Wrapper>
@@ -82,7 +83,9 @@ const BasicLayout = ({ children }) => {
                     {data.items?.map((items, idx) => {
                       return (
                         <Link href={`${items.link}`} key={idx}>
-                          <MenuSubListItem>
+                          <MenuSubListItem
+                            active={asPath.startsWith(items.link)}
+                          >
                             <a>{items.item}</a>
                           </MenuSubListItem>
                         </Link>
@@ -195,6 +198,7 @@ const MenuSubListItem = styled.li`
     :hover {
       color: black;
     }
+    ${({ active }) => active && `color: #3d3d3d; font-weight: bold;`}
   }
 `;
 
