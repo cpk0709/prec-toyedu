@@ -218,7 +218,7 @@ const HeadDiv = styled.div`
   background-color: #d6ebff;
   flex-direction: row;
   justify-content: flex-end;
-  aligh-items: center;
+  align-items: center;
 `;
 
 const LogOut = styled.button`
