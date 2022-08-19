@@ -1,12 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAxios from "../../../hooks/useAxios";
 import { restApi } from "../../../api";
-import { Table, Button, Typography, DatePicker } from "antd";
+import { Table, Button, Typography, DatePicker, Row } from "antd";
 import styled from "styled-components";
 import Link from "next/link";
+import SaveButton from "../../../components/atom/Button/SaveButton";
+import xlsx from "xlsx";
+import moment from "moment";
 
 const BucketShow = () => {
   const accounts = useAxios();
+  const [xlsxArr, setXlsxArr] = useState([]);
 
   console.log(accounts.data);
 
@@ -36,6 +40,32 @@ const BucketShow = () => {
     },
   ];
 
+  const loadXlsxData = () => {
+    //엑셀 데이터 배열 생성
+    const xlsxNewArr = accounts.data?.map((v) => ({
+      번호: v.idNum,
+      버킷: v.bucketTitle,
+      작성일자: moment(v.createdAt).format("YYYY-MM-DD"),
+      상태: v.status,
+    }));
+    setXlsxArr(xlsxNewArr);
+  };
+
+  const xlsxSave = () => {
+    // xlsx 최신버전(220819 기준) 0.18.0 이상은 뭔가 xlsx를 불러오지 못했음.
+    // if (!xlsx) {
+    //   return;
+    // }
+
+    const ws = xlsx.utils.json_to_sheet(xlsxArr);
+
+    const wb = xlsx.utils.book_new();
+
+    xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    xlsx.writeFile(wb, "Sheet1.xlsx");
+  };
+
   useEffect(() => {
     const endpoint = "/list";
     accounts.loadData(restApi.get(endpoint)).catch((error) => {
@@ -43,6 +73,10 @@ const BucketShow = () => {
       console.warn(error);
     });
   }, []);
+
+  useEffect(() => {
+    loadXlsxData();
+  }, [accounts.data]);
 
   return (
     <MainWrapper>
@@ -67,14 +101,19 @@ const BucketShow = () => {
         </MainSort>
       </MainHeader>
       <MainContent>
-        <div>
+        <TableColumn>
           <Table
             columns={columns}
             dataSource={dataSource}
             pagination={false}
             rowKey={"idNum"}
+            footer={() => (
+              <Row justify="space-between" align="middle">
+                <SaveButton text="엑셀저장" onClick={xlsxSave} />
+              </Row>
+            )}
           />
-        </div>
+        </TableColumn>
       </MainContent>
     </MainWrapper>
   );
@@ -155,6 +194,12 @@ const MainContent = styled.div`
   position: relative;
 `;
 
-const TableColumn = styled.div``;
+const TableColumn = styled.div`
+  .ant-table-thead > tr > th {
+    background-color: #ddd;
+    font-weight: bold;
+    vertical-align: middle;
+  }
+`;
 
 export default BucketShow;
