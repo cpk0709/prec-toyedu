@@ -36,8 +36,8 @@ const Header = () => {
 
   const [passwordChange, setPasswordChange] = useState({
     current: undefined,
-    // password: undefined,
-    // passwordCheck: undefined,
+    password: undefined,
+    passwordCheck: undefined,
   });
 
   const [fillForm, setFillForm] = useState(false);
@@ -98,7 +98,7 @@ const Header = () => {
                           color: "#c40000",
                         }}
                       >
-                        비밀번호가 일치하지 않습니다.
+                        현재 비밀번호가 일치하지 않습니다.
                       </p>
                     )}
                   </ReInputRow>
@@ -116,6 +116,96 @@ const Header = () => {
                   />
                 )}
               </Descriptions.item>
+              {/* ###################################### */}
+              <Descriptions.item
+                label="비밀번호"
+                span={3}
+                labelStyle={{ width: "190px", fontWeight: "bold" }}
+                contentStyle={{ width: "530px" }}
+              >
+                {fillForm && !passwordChange?.password ? (
+                  <ReInputRow>
+                    <Input
+                      onChange={(e) => {
+                        setPasswordChange((prev) => ({
+                          ...prev,
+                          password: e.target.value,
+                        }));
+                      }}
+                      bordered={false}
+                      autoFocus
+                    />
+                    {!passwordChange?.password && (
+                      <p
+                        style={{
+                          textAlign: "right",
+                          width: "400px",
+                          color: "#c40000",
+                        }}
+                      >
+                        올바른 값을 입력해 주세요.
+                      </p>
+                    )}
+                  </ReInputRow>
+                ) : (
+                  <Input
+                    onChange={(e) => {
+                      setPasswordChange((prev) => ({
+                        ...prev,
+                        password: e.target.value,
+                      }));
+                    }}
+                    placeholder="영문자, 숫자, 특수문자 포함 6자 이상 입력해 주세요"
+                    bordered={false}
+                    autoFocus
+                  />
+                )}
+              </Descriptions.item>
+              <Descriptions.item
+                label="비밀번호 확인"
+                span={3}
+                labelStyle={{ width: "190px", fontWeight: "bold" }}
+                contentStyle={{ width: "530px" }}
+              >
+                {fillForm && !passwordChange?.passwordCheck ? (
+                  <ReInputRow>
+                    <Input
+                      onChange={(e) => {
+                        setPasswordChange((prev) => ({
+                          ...prev,
+                          passwordCheck: e.target.value,
+                        }));
+                      }}
+                      bordered={false}
+                      autoFocus
+                    />
+                    {!passwordChange?.passwordCheck && (
+                      <p
+                        style={{
+                          textAlign: "right",
+                          width: "400px",
+                          color: "#c40000",
+                        }}
+                      >
+                        비밀번호가 일치하지 않습니다.
+                      </p>
+                    )}
+                  </ReInputRow>
+                ) : (
+                  <Input
+                    onChange={(e) => {
+                      setPasswordChange((prev) => ({
+                        ...prev,
+                        passwordCheck: e.target.value,
+                      }));
+                    }}
+                    placeholder="입력하신 비밀번호와 동일하게 입력해주세요."
+                    bordered={false}
+                    autoFocus
+                  />
+                )}
+              </Descriptions.item>
+              {/* ###################################### */}
             </Descriptions>
             <Row justify="end" align="middle" style={{ height: "70px" }}>
               <Button
@@ -128,7 +218,11 @@ const Header = () => {
                 }}
                 onClick={() => {
                   setIsModal(false);
-                  setPasswordChange({ current: undefined });
+                  setPasswordChange({
+                    current: undefined,
+                    password: undefined,
+                    passwordCheck: undefined,
+                  });
                   setFillForm(false);
                 }}
               >
