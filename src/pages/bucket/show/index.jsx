@@ -33,8 +33,8 @@ const BucketShow = () => {
       width: 80,
       align: "center",
       render: (value) => (
-        <Link href={"/"}>
-          <a>상세</a>
+        <Link href={`/bucket/show/detail/${value}`}>
+          <a style={{ verticalAlign: "middle" }}>상세</a>
         </Link>
       ),
     },
