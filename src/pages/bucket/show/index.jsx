@@ -11,7 +11,6 @@ import moment from "moment";
 const BucketShow = () => {
   const accounts = useAxios();
   const [xlsxArr, setXlsxArr] = useState([]);
-
   console.log(accounts.data);
 
   const dataSource = accounts.data ?? [];
