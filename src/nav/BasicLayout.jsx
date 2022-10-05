@@ -44,7 +44,7 @@ const BasicLayout = ({ children }) => {
 
   useEffect(() => {
     const targetRoute = asPath.split("/")[1];
-    console.log(targetRoute);
+    // console.log(targetRoute);
     const selectMenu = menu.find(({ key }) => targetRoute === key);
     if (selectMenu) setSelected(selectMenu.key);
   }, [asPath]);
@@ -61,10 +61,10 @@ const BasicLayout = ({ children }) => {
           {menu.map((data) => {
             const isSelect = selected === data.key;
             const onClick = () => {
-              // setSelected(data.key);
-              setSelected((prev) =>
-                prev ? (prev === data.key ? null : data.key) : data.key
-              );
+              setSelected(data.key);
+              // setSelected((prev) =>
+              //   prev ? (prev === data.key ? null : data.key) : data.key
+              // );
             };
             return (
               <MenuItem key={data.key} onClick={onClick}>
