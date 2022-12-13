@@ -121,7 +121,6 @@ const BucketShow = () => {
 const MainWrapper = styled.div`
   flex: 1;
   margin-left: 36px;
-  margin-right: 120px;
 `;
 
 const MainHeader = styled.div`
